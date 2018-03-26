@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,16 +88,15 @@ public class DetailActivity extends AppCompatActivity {
 
         setTitle(sandwich.getMainName());
 
-        originTv.setText(sandwich.getPlaceOfOrigin());
-        descriptionTv.setText(sandwich.getDescription());
+        originTv.setText(sandwich.getPlaceOfOrigin().isEmpty() ?
+                getString(R.string.unknown) : sandwich.getPlaceOfOrigin());
+        descriptionTv.setText(sandwich.getDescription().isEmpty() ?
+                getString(R.string.unknown) : sandwich.getDescription());
 
-        for (int i = 0; i < sandwich.getAlsoKnownAs().size(); i++) {
-            alsoKnownTv.setText(sandwich.getAlsoKnownAs().get(i));
-        }
-
-        for (int i = 0; i < sandwich.getIngredients().size(); i++) {
-            ingredientsTv.setText(sandwich.getIngredients().get(i));
-        }
+        alsoKnownTv.setText(sandwich.getAlsoKnownAs().isEmpty() ?
+                getString(R.string.no_other_known_name) : TextUtils.join(", ", sandwich.getAlsoKnownAs()));
+        ingredientsTv.setText(sandwich.getIngredients().isEmpty() ?
+                getString(R.string.unknown) : TextUtils.join(", ", sandwich.getIngredients()));
 
     }
 }
